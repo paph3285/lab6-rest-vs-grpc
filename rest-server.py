@@ -67,7 +67,26 @@ def dotproduct():
 # route http posts to this method
 @app.route('/api/jsonimage', methods=['POST'])
 def jsonimage():
-    pass
+    try:
+        data = request.get_json()
+        encoded_img = data['image']
+
+        img_bytes = base64.b64decode(encoded_img)
+
+        ioBuffer = io.BytesIO(img_bytes)
+        img = Image.open(ioBuffer)
+
+        response = {
+            'width': img.size[0],
+            'height': img.size[1]
+        }
+
+    except:
+        response = {'width': 0, 'height': 0}
+
+    response_pickled = jsonpickle.encode(response)
+
+    return Response(response=response_pickled, status=200, mimetype="application/json")
 
 # start flask app
 app.run(host="0.0.0.0", port=5000)
