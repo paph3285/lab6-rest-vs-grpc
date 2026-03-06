@@ -31,12 +31,41 @@ def doAdd(addr, debug=False):
         print(json.loads(response.text))
 
 def doDotProduct(addr, debug=False):
-    pass
+    headers = {'content-type': 'application/json'}
+    dotproduct_url = addr + '/api/dotproduct'
+
+    a = [random.random() for _ in range(100)]
+    b = [random.random() for _ in range(100)]
+
+    payload = {
+        'a': a,
+        'b': b
+    }
+
+    response = requests.post(dotproduct_url, json=payload, headers=headers)
+
+    if debug:
+        print("Response is", response)
+        print(json.loads(response.text))
 
 def doJsonImage(addr, debug=False):
-    pass
+    headers = {'content-type': 'application/json'}
+    image_url = addr + '/api/jsonimage'
 
-if len(sys.argv) < 3:
+    img = open('Flatirons_Winter_Sunrise_edit_2.jpg', 'rb').read()
+    encoded_img = base64.b64encode(img).decode('utf-8')
+
+    payload = {
+        'image': encoded_img
+    }
+
+    response = requests.post(image_url, json=payload, headers=headers)
+
+    if debug:
+        print("Response is", response)
+        print(json.loads(response.text))
+
+if len(sys.argv) < 4:
     print(f"Usage: {sys.argv[0]} <server ip> <cmd> <reps>")
     print(f"where <cmd> is one of add, rawImage, sum or jsonImage")
     print(f"and <reps> is the integer number of repititions for measurement")
