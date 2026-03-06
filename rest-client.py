@@ -67,7 +67,7 @@ def doJsonImage(addr, debug=False):
 
 if len(sys.argv) < 4:
     print(f"Usage: {sys.argv[0]} <server ip> <cmd> <reps>")
-    print(f"where <cmd> is one of add, rawImage, sum or jsonImage")
+    print(f"where <cmd> is one of add, rawImage, dotProduct or jsonImage")
     print(f"and <reps> is the integer number of repititions for measurement")
 
 host = sys.argv[1]
