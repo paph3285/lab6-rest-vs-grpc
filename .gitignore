@@ -1,0 +1,13 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# gRPC generated files
+lab6_pb2.py
+lab6_pb2_grpc.py
+
+# Local experiment files
+grpc-client.py
+grpc-server.py
+lab6.proto
+
