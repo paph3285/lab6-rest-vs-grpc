@@ -10,19 +10,8 @@
 | gRPC jsonimg | ~32 ms | ~32.61 ms | 220.41 ms |
 | PING | <1 ms | ~0.65 ms | 151.07 ms |
 
-Network latency has a major impact on the performance of both REST and gRPC when the client and server are located in different regions. The ping latency between the US and Europe virtual machines averaged about 151 ms, which closely matches the latency observed for lightweight operations such as `add` and `dotproduct`. This indicates that when computation is small, the network round-trip time dominates the total response time. Larger operations such as `rawimg` and `jsonimg` take longer because they involve transmitting larger payloads across the network. In general, gRPC consistently performed faster than REST because it uses a binary protocol and maintains a single persistent TCP connection. In contrast, REST creates a new TCP connection for each request, which adds additional overhead. As network latency increases, the efficiency advantages of gRPC become more noticeable.
-
-
-
-
-
-dc
-
 
 Summary of Findings:
-
-
-
 The results show a consistent performance difference between REST and gRPC across the different environments. When the services were running locally or within the same zone, gRPC generally performed faster than REST. This is likely because gRPC maintains a persistent HTTP/2 connection and uses efficient binary serialization through Protocol Buffers, while REST typically creates a new TCP connection for each request and sends data using text formats like JSON. Because of this, REST introduces additional overhead for repeated requests.
 
 As network distance increased, especially when running tests between different regions, overall latency increased substantially for both methods. The ping test between the US and Europe virtual machines averaged about ~151 ms, which closely matches the latency observed for lightweight operations such as `add` and `dotproduct`. This indicates that when the computation itself is small, the network round-trip time dominates the total response time. In other words, most of the delay is caused by the physical distance between the machines rather than the RPC framework itself.
